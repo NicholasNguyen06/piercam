@@ -1,0 +1,24 @@
+name: Check Pier Visibility
+on:
+  schedule:
+    - cron: "0 15 * * *" # 7am PST / 8am PDT
+    - cron: "0 18 * * *" # 10am PST / 11am PDT
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npx tsx src/check.ts
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_FROM_NUMBER: ${{ secrets.TWILIO_FROM_NUMBER }}
+          NOTIFY_PHONE_NUMBERS: ${{ secrets.NOTIFY_PHONE_NUMBERS }}
+          VISIBILITY_THRESHOLD_FT: "15"
