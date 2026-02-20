@@ -3,154 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scripps Pier Visibility Alerts — SMS Sign-Up</title>
+  <title>Scripps Pier Visibility Alerts</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-      color: #1a1a1a;
-      background: #f8f9fa;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
-    }
-    main {
-      max-width: 540px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem 2rem;
-      flex: 1;
-    }
-    h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: #0b3d6b;
-    }
-    .subtitle {
-      color: #555;
-      margin-bottom: 2rem;
-    }
-    .info {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 1.25rem;
-      margin-bottom: 2rem;
-    }
-    .info h2 { font-size: 1rem; margin-bottom: 0.5rem; }
-    .info ul { padding-left: 1.25rem; color: #444; }
-    .info li { margin-bottom: 0.25rem; }
-    form {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    label { display: block; font-weight: 600; margin-bottom: 0.35rem; }
-    input[type="tel"] {
-      width: 100%;
-      padding: 0.6rem 0.75rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      margin-bottom: 1rem;
-    }
-    input[type="tel"]:focus { outline: none; border-color: #0b3d6b; box-shadow: 0 0 0 2px rgba(11,61,107,.15); }
-    .consent-group {
-      display: flex;
-      gap: 0.5rem;
-      align-items: flex-start;
-      margin-bottom: 1.25rem;
-    }
-    .consent-group input[type="checkbox"] { margin-top: 0.3rem; flex-shrink: 0; }
-    .consent-text { font-size: 0.85rem; color: #444; line-height: 1.5; }
-    button {
-      width: 100%;
-      padding: 0.7rem;
-      font-size: 1rem;
-      font-weight: 600;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0c2d48, #145374, #2e8bc0);
       color: #fff;
-      background: #0b3d6b;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.15s;
+      padding: 1rem;
     }
-    button:hover { background: #0a3059; }
-    button:disabled { background: #9bb; cursor: not-allowed; }
-    .confirmation {
-      display: none;
-      background: #e8f5e9;
-      border: 1px solid #a5d6a7;
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .subtitle {
+      font-size: 0.95rem;
+      opacity: 0.85;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+    form { display: flex; flex-direction: column; gap: 0.75rem; }
+    input[type="email"] {
+      padding: 0.75rem 1rem;
       border-radius: 8px;
-      padding: 1.25rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      color: #2e7d32;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+    }
+    input[type="email"]::placeholder { color: rgba(255, 255, 255, 0.5); }
+    input[type="email"]:focus { border-color: rgba(255, 255, 255, 0.6); }
+    button {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: none;
+      background: #2e8bc0;
+      color: #fff;
+      font-size: 1rem;
       font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
     }
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.8rem;
-      color: #888;
-      border-top: 1px solid #e0e0e0;
-      background: #fff;
+    button:hover { background: #1a6fa0; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .message {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: none;
     }
-    footer a { color: #0b3d6b; }
-    footer p { margin-bottom: 0.35rem; }
+    .message.success { display: block; background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.4); }
+    .message.error { display: block; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); }
   </style>
 </head>
 <body>
-  <main>
+  <div class="card">
     <h1>Scripps Pier Visibility Alerts</h1>
-    <p class="subtitle">Get underwater visibility conditions at Scripps Pier delivered to your phone via SMS.</p>
-
-    <div class="info">
-      <h2>How it works</h2>
-      <ul>
-        <li>Receive text messages with current underwater visibility at Scripps Pier, La Jolla</li>
-        <li>Messages are sent when conditions are checked (up to 2 messages per day)</li>
-        <li>Reply <strong>STOP</strong> at any time to unsubscribe</li>
-        <li>Message and data rates may apply</li>
-      </ul>
-    </div>
-
-    <form id="opt-in-form">
-      <label for="phone">Mobile phone number</label>
-      <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567" required autocomplete="tel">
-
-      <div class="consent-group">
-        <input type="checkbox" id="consent" required>
-        <span class="consent-text">
-          I agree to receive automated text messages about underwater visibility at Scripps Pier.
-          Message frequency varies (up to 2 messages per day). Message and data rates may apply.
-          Reply STOP to unsubscribe. See our <a href="privacy.html">Privacy Policy</a>.
-        </span>
-      </div>
-
-      <button type="submit">Sign Up for Alerts</button>
+    <p class="subtitle">Get a daily email when underwater visibility at Scripps Pier is good for diving.</p>
+    <form id="signup-form">
+      <input type="email" id="email" placeholder="you@example.com" required>
+      <button type="submit">Sign Up</button>
     </form>
+    <div id="message" class="message"></div>
+  </div>
 
-    <div class="confirmation" id="confirmation">
-      Thank you! Your request has been received. You'll be added to the alerts list shortly.
-    </div>
-  </main>
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-  <footer>
-    <p>Scripps Pier Visibility Alerts</p>
-    <p>Reply STOP to any message to cancel. Reply HELP for help.</p>
-    <p><a href="privacy.html">Privacy Policy</a> · Contact: <a href="mailto:nick@nickhough.com">nick@nickhough.com</a></p>
-  </footer>
+    const SUPABASE_URL = "https://fbfeptolybhtwqtwtqzv.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_MkErhpWYlBAnxkySMwMFUA_MqS1mcku";
 
-  <script>
-    document.getElementById('opt-in-form').addEventListener('submit', function(e) {
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const form = document.getElementById("signup-form");
+    const messageEl = document.getElementById("message");
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      this.style.display = 'none';
-      document.getElementById('confirmation').style.display = 'block';
+      const email = document.getElementById("email").value.trim();
+      const button = form.querySelector("button");
+
+      button.disabled = true;
+      button.textContent = "Signing up...";
+      messageEl.className = "message";
+      messageEl.style.display = "none";
+
+      const { error } = await supabase.from("subscribers").insert({ email });
+
+      if (error) {
+        if (error.code === "23505") {
+          showMessage("You're already signed up!", "success");
+        } else {
+          showMessage("Something went wrong. Please try again.", "error");
+          console.error(error);
+        }
+      } else {
+        showMessage("You're signed up! You'll get an email when visibility is good.", "success");
+        form.reset();
+      }
+
+      button.disabled = false;
+      button.textContent = "Sign Up";
     });
+
+    function showMessage(text, type) {
+      messageEl.textContent = text;
+      messageEl.className = `message ${type}`;
+    }
   </script>
 </body>
 </html>

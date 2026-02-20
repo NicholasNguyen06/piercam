@@ -14,7 +14,7 @@ if (existsSync(envPath)) {
 import { getHlsStreamUrl } from "./stream.js";
 import { extractFrame } from "./snapshot.js";
 import { analyzeVisibility } from "./vision.js";
-import { sendNotifications } from "./sms.js";
+import { sendNotifications } from "./email.js";
 
 const THRESHOLD_FT = Number(process.env.VISIBILITY_THRESHOLD_FT) || 15;
 
